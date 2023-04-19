@@ -69,14 +69,22 @@ export default {
   mounted() {},
   // 组件方法
   methods: {
-    async operateDepts(type) {
+    operateDepts(type) {
       if (type === 'add') {
         // 添加子部门
+        this.$emit('addDepts', this.treeNode)
       } else if (type === 'edit') {
         // 编辑部门
+        this.$emit('editDepts', this.treeNode)
       } else {
         // 删除部门
-        await delDepartments(this.treeNode.id)
+        this.$confirm('您确定要删除该组织部门吗').then(() => {
+          return delDepartments(this.treeNode.id)
+        }).then(() => {
+          // 成功执行删除 重新渲染前端数据
+          this.$emit('delDepts') // 触发自定义事件
+          this.$message.success('删除部门成功')
+        })
       }
     }
   }
