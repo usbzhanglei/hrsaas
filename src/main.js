@@ -11,12 +11,16 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
-
+import Components from '@/components'
 import * as directives from '@/directives'
 
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import * as filters from '@/filters'
+Object.keys(filters).forEach(item => {
+  Vue.filter(item, filters[item]) // 注册自定义过滤器
+})
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -38,7 +42,7 @@ Vue.use(ElementUI, { locale })
 Object.keys(directives).forEach(key => {
   Vue.directive(key, directives[key])
 })
-
+Vue.use(Components)
 Vue.config.productionTip = false
 
 new Vue({

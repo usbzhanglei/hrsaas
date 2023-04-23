@@ -105,7 +105,7 @@ export default {
         code: [
           { required: true, message: '部门编码不能为空', trigger: 'blur' },
           { min: 1, max: 50, message: '部门编码在1-50之间', trigger: 'blur' },
-          { trigger: 'blur', validator: checkCodeRepeat }
+          { trigger: 'change', validator: checkCodeRepeat }
         ],
         manager: [
           { required: true, message: '部门管理者不能为空', trigger: 'blur' }
