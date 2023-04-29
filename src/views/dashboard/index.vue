@@ -11,6 +11,7 @@
       </template>
       <el-button slot="after" type="primary">导入Excel</el-button>
     </page-tools>
+    <image-upload />
     <UploadExcel />
   </div>
 </template>
