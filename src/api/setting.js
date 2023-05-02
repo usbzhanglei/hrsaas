@@ -56,3 +56,13 @@ export function addRole(data) {
     method: 'post'
   })
 }
+/** *
+ * 角色分配权限接口
+ */
+export function assignPrem(data) {
+  return request({
+    url: '/sys/role/assignPrem',
+    method: 'put',
+    data
+  })
+}

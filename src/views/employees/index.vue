@@ -11,7 +11,7 @@
         <template #after>
           <el-button size="small" type="success" @click="$router.push('/import')">excel导入</el-button>
           <el-button size="small" type="danger" @click="exportData">excel导出</el-button>
-          <el-button size="small" type="primary" @click="showDialog = true">新增员工</el-button>
+          <el-button :disabled="!checkPermission('POINT-USER-ADD')" size="small" type="primary" @click="showDialog = true">新增员工</el-button>
         </template>
       </page-tools>
       <!-- 表格 -->
@@ -54,7 +54,7 @@
             <el-button type="text" size="small">转正</el-button>
             <el-button type="text" size="small">调岗</el-button>
             <el-button type="text" size="small">离职</el-button>
-            <el-button type="text" size="small">角色</el-button>
+            <el-button type="text" size="small" @click="editRole(row.id)">角色</el-button>
             <el-button type="text" size="small" @click="deleteEmployee(row.id)">删除</el-button>
           </template>
         </el-table-column>
@@ -76,6 +76,8 @@
         <canvas ref="myCanvas" />
       </el-row>
     </el-dialog>
+    <!-- 放置分配组件 -->
+    <assignRole ref="assignRole" :show-role-dialog.sync="showRoleDialog" :user-id="userId" />
   </div>
 </template>
 
@@ -85,10 +87,12 @@ import EmployeesEnum from '@/api/constant/employees' // 引入员工的枚举对
 import AddEmployees from './components/add-employees'
 import { formatDate } from '@/filters'
 import QrCode from 'qrcode'
+import assignRole from './components/assign-role.vue'
 export default {
   name: 'Employees',
   components: {
-    AddEmployees
+    AddEmployees,
+    assignRole
   },
   data() {
     return {
@@ -100,7 +104,9 @@ export default {
       },
       loading: false, // 显示遮罩层
       showDialog: false,
-      showCodeDiaLog: false // 显示二维码弹层
+      showCodeDiaLog: false, // 显示二维码弹层
+      showRoleDialog: false, // 分配权限弹层
+      userId: null
     }
   },
   created() {
@@ -189,6 +195,12 @@ export default {
       } else {
         this.$message.warning('该用户还未上传头像')
       }
+    },
+    async editRole(id) {
+      // 弹层
+      this.userId = id
+      await this.$refs.assignRole.getUserDetailById(id)
+      this.showRoleDialog = true
     }
   }
 }

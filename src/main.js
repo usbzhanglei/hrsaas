@@ -13,6 +13,7 @@ import store from './store'
 import router from './router'
 import Components from '@/components'
 import * as directives from '@/directives'
+import checkPermission from '@/mixin/checkPermission'
 
 import '@/icons' // icon
 import '@/permission' // permission control
@@ -44,6 +45,8 @@ Object.keys(directives).forEach(key => {
 })
 Vue.use(Components)
 Vue.config.productionTip = false
+
+Vue.mixin(checkPermission)
 
 new Vue({
   el: '#app',
