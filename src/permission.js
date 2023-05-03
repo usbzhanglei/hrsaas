@@ -30,7 +30,7 @@ router.beforeEach(async(to, from, next) => {
         // 如果后续 需要根据用户资料获取数据的话 这里必须改成同步
         const { roles } = await store.dispatch('user/getUserInfo')
         // 筛选用户的可以路由
-        console.log(roles.menus)
+        // console.log(roles.menus)
         const routes = await store.dispatch('permission/filterRouters', roles.menus)
         router.addRoutes([...routes, { path: '*', redirect: '/404', hidden: true }])
         // 添加完动态路由之后

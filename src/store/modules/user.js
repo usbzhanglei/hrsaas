@@ -51,6 +51,8 @@ const actions = {
     context.commit('removeToken')
     // 删除用户资料
     context.commit('removeUserToken')
+    // 重置多页签
+    context.dispatch('tagsView/delAllViews', null, { root: true })
     // 重置路由
     resetRouter()
     // 去设置权限模块下的路由为初始状态

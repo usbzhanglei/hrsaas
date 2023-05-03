@@ -59,7 +59,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'dashboard',
-        name: 'Dashboard',
+        name: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         meta: { title: '首页', icon: 'dashboard' }
       }
@@ -91,7 +91,9 @@ export const asyncRoutes = [
   socialRouter
 ]
 const createRouter = () => new Router({
+  mode: 'history',
   // mode: 'history', // require service support
+  base: 'hr/', // 配置项目的基础地址
   scrollBehavior: () => ({ y: 0 }),
   routes: [...constantRoutes]
 })
